@@ -10,7 +10,7 @@ use App\Models\User;
 class LoginTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * require fields validation.
      *
      * @return void
      */
@@ -26,6 +26,11 @@ class LoginTest extends TestCase
             ]);
                             
         }
+           /**
+     * An valid user  logged in.
+     *
+     * @return void
+     */
         public function test_login_validUser()
         {
             $user   = User::factory()->count(1)->create();    
@@ -52,7 +57,6 @@ class LoginTest extends TestCase
             'password' => 'invalid'
         ]);
 
-       // $response->assertSessionHasErrors();
 
         $this->assertGuest();
     }

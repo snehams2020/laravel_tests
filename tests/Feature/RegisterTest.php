@@ -20,11 +20,29 @@ class RegisterTest extends TestCase
             $this->json('post', '/api/register', [])
             ->assertStatus(422)                
             ->assertJsonStructure(['success','message',
-            'data' => ['name','email','password']
+            'data' => ['name','email','password' ]
               
         ]);
          
         
+    }
+    public function testRequirePasswordConfirmation()
+    {
+        $register = [
+            'name' => 'User',
+            'email' => 'user@test.com',
+            'password' => 'userpass',
+            'password_confirmation' => 'userpass123'
+
+        ];
+        
+        $this->json('POST', 'api/register', $register)
+            ->assertStatus(422)
+            ->assertJsonStructure(['success','message',
+            'data' => ['password' ]
+              
+        ]);
+         
     }
      /**
      * A valid user can be registered.
@@ -39,6 +57,8 @@ class RegisterTest extends TestCase
             'name' => $user[0]->name,
             'email' => trim($user[0]->email).rand(0,4),
             'password' => 'password',
+            'password_confirmation' => 'password',
+
         ]);
 
         $response->assertStatus(201);
@@ -58,6 +78,8 @@ class RegisterTest extends TestCase
             'name' => $user[0]->name,
             'email' => $user[0]->email,
             'password' => 'password123',
+            'password_confirmation' => 'password',
+
         ]);
 
        // $response->assertSessionHasErrors();

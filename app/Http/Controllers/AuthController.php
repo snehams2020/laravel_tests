@@ -20,7 +20,11 @@ public function __construct(User $user)
         $this->user = $user;
       
 }
-    
+/*  register Req
+ *  @param  App\Http\Requests\RegisterRequest $request
+*   @return Illuminate\Http\JsonResponse
+*/
+
 public function register(User $user, RegisterRequest $request):RegisterResource
     {    
         $validatedData = $request->validated();
@@ -39,6 +43,11 @@ public function register(User $user, RegisterRequest $request):RegisterResource
             ]);
        
 }
+ /**
+     * Login Req
+     *  @param  App\Http\Requests\LoginRequest $request
+     * @return Illuminate\Http\JsonResponse
+    */
 public function login(User $user, LoginRequest $request):JsonResponse
 {
     if (!Auth::attempt($request->validated())) {
